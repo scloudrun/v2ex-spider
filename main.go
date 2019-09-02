@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 	"v2ex-spider/article"
+	"v2ex-spider/color"
 
 	prompt "github.com/c-bata/go-prompt"
 )
@@ -21,7 +23,7 @@ func v2ex(tab, index string) {
 	currentArticles := article.GetArticles(url)
 	for k, v := range currentArticles {
 		if len(index) == 0 {
-			fmt.Printf("序号: %d   评论: %s \tT: %s\n", k, v.Comment, v.Title)
+			color.Debug(fmt.Sprintf("序号: %d   评论: %s \tT: %s\n", k, v.Comment, v.Title))
 		} else {
 			if index == strconv.Itoa(k) {
 				title = v.Title
@@ -33,9 +35,17 @@ func v2ex(tab, index string) {
 
 	if len(index) > 0 {
 		article := article.GetArticle(ArticleUrl + M[index])
-		fmt.Printf("标题:%s\n描述:%s\n", title, article.Content)
-		for _, v := range article.CommentContent {
-			fmt.Println(v.Floor, "楼:", v.Content)
+		color.Notice(fmt.Sprintf("\n"))
+		color.Debug("标题:", title)
+		color.Notice(fmt.Sprintf("\n"))
+		color.Debug("描述:", article.Content)
+		for k, v := range article.CommentContent {
+			color.Notice(fmt.Sprintf("\n"))
+			if k%2 == 0 {
+				color.Notice(v.Floor, "楼:", v.Content)
+			} else {
+				color.Debug(v.Floor, "楼:", v.Content)
+			}
 		}
 	}
 }
@@ -62,6 +72,10 @@ func executor(in string) {
 	if in == "" {
 		LivePrefixState.IsEnable = false
 		LivePrefixState.LivePrefix = in
+		return
+	}
+	if in == "exit" || in == "quit" {
+		os.Exit(0)
 		return
 	}
 	arr := strings.Split(in, " ")

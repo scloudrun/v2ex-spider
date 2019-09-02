@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 	"testing"
+	"v2ex-spider/color"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -32,8 +33,9 @@ func Test_ParseArticle(t *testing.T) {
 	article := ParseArticle(doc)
 
 	fmt.Println(article.Content)
+	color.Debug("描述:", article.Content)
 	for _, v := range article.CommentContent {
-		fmt.Println(v.Floor, "楼:", v.Content)
+		color.Debug(v.Floor, "楼:", v.Content)
 	}
 }
 
