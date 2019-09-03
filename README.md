@@ -23,12 +23,20 @@
 - 分析页面，获取文章列表
 - 分析页面，获取描述和评论
 
-### 安装
+### Install
 ```
-$ go get -u github.com/PuerkitoBio/goquery
+$ go get github.com/scloud/v2ex-spider
 ```
 
 ### 运行
 ```
 $ go run main.go
 ```
+
+### Usage
+```
+index       获取首页文章列表
+
+index 2     获取首页序号为2的文章
+```
+
