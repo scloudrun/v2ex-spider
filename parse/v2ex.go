@@ -56,12 +56,14 @@ func ParsePages(doc *goquery.Document) (pages []Page) {
 // 解析文章列表
 func ParseArticles(doc *goquery.Document) (articles []V2exArticle) {
 	doc.Find("#Main .box .cell").Each(func(i int, s *goquery.Selection) {
-
+		var reply string
 		title := s.Find(".item_title a").Eq(0).Text()
 
 		href, _ := s.Find(".item_title a").Eq(0).Attr("href")
 
-		reply := s.Find(".count_livid").Eq(0).Text()
+		if reply = s.Find(".count_livid").Eq(0).Text(); len(reply) == 0 {
+			reply = "0"
+		}
 
 		if len(title) > 0 {
 			article := V2exArticle{

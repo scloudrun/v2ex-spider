@@ -35,7 +35,6 @@ func GetArticles(url string) []parse.V2exArticle {
 
 func GetArticle(url string) parse.V2exArticle {
 	if res := cache.GetCache(url); res != nil {
-		fmt.Println("获取cache article")
 		return res.(parse.V2exArticle)
 	}
 
@@ -43,7 +42,6 @@ func GetArticle(url string) parse.V2exArticle {
 	currentArticle := parse.ParseArticle(doc)
 
 	cache.SetCache(url, currentArticle)
-	fmt.Println("写入cache article")
 
 	return currentArticle
 }
